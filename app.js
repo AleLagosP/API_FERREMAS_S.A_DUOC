@@ -13,6 +13,8 @@ const connection = require('./config/config.js');
 
 // Conexión a la base de datos - APIs:
 const clientes = require('./controllers/clientes');
+const productos = require('./controllers/productos');
+const ventas = require('./controllers/ventas');
 
 // Configurar cabeceras y cors
 app.use((req, res, next) => {
@@ -30,8 +32,10 @@ function controladores() {
         response.send("Bienvenido a API REST de ferremas");
     });
 
-    // Usar el controlador 'buscar_todo' en la ruta '/api/clientes'
+    // Usar el controlador 'buscar_todo' en la ruta'
     app.get('/api/clientes/todos', clientes.buscar_todo);
+    app.use('/api/productos', productos);
+    app.use('/api/ventas', ventas);
 }
 
 // Se inicia servidor
