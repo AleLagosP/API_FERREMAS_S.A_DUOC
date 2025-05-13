@@ -1,11 +1,12 @@
--- Tabla de Clientes
+-- Base de datos: BD_FERREMAS
+-- Tabla de Clientes:
 CREATE TABLE CLIENTES (
     ID_CLIENTE INT AUTO_INCREMENT PRIMARY KEY,
     NOMBRE VARCHAR(100) NOT NULL,
     DOMICILIO VARCHAR(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabla de Productos
+-- Tabla de Productos:
 CREATE TABLE PRODUCTOS (
     COD_PRODUCTO INT AUTO_INCREMENT PRIMARY KEY,
     NOMBRE_PRODUCTO VARCHAR(100) NOT NULL,
@@ -14,7 +15,7 @@ CREATE TABLE PRODUCTOS (
     DESCRIPCION VARCHAR(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabla de Ventas
+-- Tabla de Ventas:
 CREATE TABLE VENTAS (
     COD_VENTA INT AUTO_INCREMENT PRIMARY KEY,
     ID_CLIENTE INT NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE VENTAS (
     FOREIGN KEY (ID_CLIENTE) REFERENCES CLIENTES(ID_CLIENTE)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabla de Detalle de Ventas
+-- Tabla de Detalle de Ventas:
 CREATE TABLE DETALLE_VENTA (
     ID_DETALLE INT AUTO_INCREMENT PRIMARY KEY,
     COD_VENTA INT NOT NULL,
@@ -35,7 +36,8 @@ CREATE TABLE DETALLE_VENTA (
     FOREIGN KEY (COD_PRODUCTO) REFERENCES PRODUCTOS(COD_PRODUCTO)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Llenado de tablas
+-- Llenado de tablas:
+-- Clientes
 INSERT INTO CLIENTES (NOMBRE, DOMICILIO) VALUES 
 ('Juan Pérez', 'Av. Las Condes 1234, Santiago'),
 ('María González', 'Calle San Diego 456, Santiago'),
@@ -76,6 +78,7 @@ INSERT INTO CLIENTES (NOMBRE, DOMICILIO) VALUES
 ('Sebastián Lara', 'Pasaje Los Aromos 123, Talagante'),
 ('Catalina Orellana', 'Av. Austral 777, Coyhaique');
 
+-- Productos
 INSERT INTO PRODUCTOS (NOMBRE_PRODUCTO, STOCK, PRECIO, DESCRIPCION) VALUES
 ('Martillo', 50, 4990, 'Martillo de acero con mango de goma antideslizante'),
 ('Alicate', 40, 3990, 'Alicate universal de 6 pulgadas, acero forjado'),
@@ -98,6 +101,7 @@ INSERT INTO PRODUCTOS (NOMBRE_PRODUCTO, STOCK, PRECIO, DESCRIPCION) VALUES
 ('Candado', 33, 3690, 'Candado de acero templado con 2 llaves'),
 ('Escalera aluminio', 10, 45990, 'Escalera plegable de 5 peldaños, ligera y resistente');
 
+-- Ventas
 INSERT INTO VENTAS (ID_CLIENTE, TIPO_ENTREGA) VALUES
 (1, 'Retiro en tienda'),
 (2, 'Despacho a domicilio'),
@@ -150,8 +154,8 @@ INSERT INTO VENTAS (ID_CLIENTE, TIPO_ENTREGA) VALUES
 (27, 'Retiro en tienda'),
 (12, 'Despacho a domicilio');
 
--- detalle_venta 
 
+-- detalle_venta 
 INSERT INTO DETALLE_VENTA (COD_VENTA, COD_PRODUCTO, CANTIDAD, PRECIO_UNITARIO, TOTAL_PRODUCTO)
 SELECT 
     vta.COD_VENTA,
