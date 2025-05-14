@@ -24,7 +24,6 @@ app.use((_req, res, next) => {
 // Rutas principales de la API (controladores)
 const clientesRouter = require('./controllers/clientes');
 const productosRouter = require('./controllers/productos');
-const ventasRouter = require('./controllers/ventas');
 
 // Definición de rutas
 function configurarRutas() {
@@ -34,7 +33,6 @@ function configurarRutas() {
 
     app.use('/api/clientes', clientesRouter);
     app.use('/api/productos', productosRouter);
-    app.use('/api/ventas', ventasRouter);
 }
 
 // Configurar rutas antes de levantar el servidor

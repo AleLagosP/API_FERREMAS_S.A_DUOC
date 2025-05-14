@@ -4,335 +4,158 @@
   <meta charset="UTF-8" />
   <title>Gestión de Ventas - Ferremas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="ventas.js"></script>
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Ferremas</a>
-    <div class="navbar-nav">
-      <a class="nav-link text-white" href="index.html">Clientes</a>
-      <a class="nav-link text-white" href="productos.html">Productos</a>
-      <a class="nav-link text-white active" href="#">Ventas</a>
-    </div>
-  </div>
-</nav>
-
-<div class="container">
-  <h1 class="text-center mb-4">Gestión de Ventas</h1>
-
-  <!-- Buscar ventas por ID de cliente -->
-  <div class="card mb-3">
-    <div class="card-body">
-      <div class="row g-3">
-        <div class="col-md-4">
-          <input type="number" id="buscarCliente" class="form-control" placeholder="ID Cliente">
-        </div>
-        <div class="col-md-2 d-grid">
-          <button class="btn btn-primary" onclick="buscarVentas()">Buscar Ventas</button>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Ferremas</a>
+      <div class="navbar-nav">
+        <a class="nav-link text-white" href="index.html">Clientes</a>
+        <a class="nav-link text-white" href="productos.html">Productos</a>
+        <a class="nav-link text-white active" href="#">Ventas</a>
       </div>
     </div>
-  </div>
+  </nav>
 
-  <!-- Lista de ventas -->
-  <div class="card mb-3" id="listaVentasCard" style="display:none;">
-    <div class="card-body">
-      <h5>Ventas del Cliente</h5>
-      <ul id="listaVentas" class="list-group"></ul>
-    </div>
-  </div>
+  <div class="container">
+    <h1 class="text-center mb-4">Gestión de Ventas</h1>
 
-  <!-- Detalle de venta -->
-  <div class="card mb-4" id="detalleVentaCard" style="display:none;">
-    <div class="card-body">
-      <h5>Detalle de Venta</h5>
-      <p><strong>ID Venta:</strong> <span id="dv_cod_venta"></span></p>
-      <p><strong>ID Cliente:</strong> <span id="dv_id_cliente"></span></p>
-      <p><strong>Tipo de Entrega:</strong> <span id="dv_tipo_entrega"></span></p>
-      <p><strong>Fecha Venta:</strong> <span id="dv_fecha_venta"></span></p>
-      <h6>Productos:</h6>
-      <ul id="dv_productos" class="list-group mb-2"></ul>
-      <p><strong>Total Venta:</strong> $<span id="dv_total"></span></p>
-
-      <div class="mt-3">
-        <button class="btn btn-primary me-2" onclick="cargarVentaParaEditar()">Editar</button>
-        <button class="btn btn-danger" onclick="eliminarVenta()">Eliminar</button>
+    <!-- Buscar ventas por ID de cliente -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <input type="number" id="buscarCliente" class="form-control" placeholder="ID Cliente">
+          </div>
+          <div class="col-md-2 d-grid">
+            <button class="btn btn-primary" onclick="buscarVentas()">Buscar Ventas</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-<!-- Registrar nueva venta -->
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Registrar Nueva Venta</h5>
-    <form id="formVenta">
-      <div class="mb-3">
-        <label for="cliente" class="form-label">Cliente:</label>
-        <select id="cliente" name="cliente" class="form-select" required></select>
+    <!-- Lista de ventas -->
+    <div class="card mb-3" id="listaVentasCard" style="display:none;">
+      <div class="card-body">
+        <h5>Ventas del Cliente</h5>
+        <ul id="listaVentas" class="list-group"></ul>
       </div>
+    </div>
 
-      <div class="mb-3">
-        <label for="tipo_entrega" class="form-label">Tipo de entrega:</label>
-        <select id="tipo_entrega" name="tipo_entrega" class="form-select" required>
-          <option value="domicilio">Despacho a domicilio</option>
-          <option value="tienda">Retiro en tienda</option>
-        </select>
-      </div>
+    <!-- Detalle de venta -->
+    <div class="card mb-4" id="detalleVentaCard" style="display:none;">
+      <div class="card-body">
+        <h5>Detalle de Venta</h5>
+        <p><strong>ID Venta:</strong> <span id="dv_cod_venta"></span></p>
+        <p><strong>ID Cliente:</strong> <span id="dv_id_cliente"></span></p>
+        <p><strong>Tipo de Entrega:</strong> <span id="dv_tipo_entrega"></span></p>
+        <p><strong>Fecha Venta:</strong> <span id="dv_fecha_venta"></span></p>
+        <h6>Productos:</h6>
+        <ul id="dv_productos" class="list-group mb-2"></ul>
+        <p><strong>Total Venta:</strong> $<span id="dv_total"></span></p>
 
-      <div class="mb-3">
-        <label for="fecha" class="form-label">Fecha:</label>
-        <input type="date" id="fecha" name="fecha" class="form-control" required>
-      </div>
-
-      <hr>
-
-      <h6>Agregar productos</h6>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label for="producto" class="form-label">Producto:</label>
-          <select id="producto" class="form-select"></select>
-        </div>
-        <div class="col-md-4">
-          <label for="cantidad" class="form-label">Cantidad:</label>
-          <input type="number" id="cantidad" min="1" value="1" class="form-control">
-        </div>
-        <div class="col-md-2 d-grid align-items-end">
-          <button type="button" class="btn btn-secondary mt-4" onclick="agregarProducto()">Agregar</button>
+        <div class="mt-3">
+          <button class="btn btn-primary me-2" onclick="editarVenta()">Editar</button>
+          <button class="btn btn-danger" onclick="eliminarVenta()">Eliminar</button>
         </div>
       </div>
+    </div>
 
-      <ul id="listaProductos" class="list-group mb-3"></ul>
+    <!-- Registrar nueva venta -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Registrar Nueva Venta</h5>
+        <form id="ventaForm">
+          <div class="mb-3">
+            <label for="cliente" class="form-label">Cliente:</label>
+            <select id="cliente" name="cliente" class="form-select" required>
+              <option value="">Selecciona un cliente</option>
+            </select>
+          </div>
 
-      <input type="hidden" id="productosVenta" name="productosVenta">
+          <div class="mb-3">
+            <label for="tipo_entrega" class="form-label">Tipo de entrega:</label>
+            <select id="tipo_entrega" name="tipo_entrega" class="form-select" required>
+              <option value="Despacho a domicilio">Despacho a domicilio</option>
+              <option value="Retiro en tienda">Retiro en tienda</option>
+            </select>
+          </div>
 
-      <button type="submit" class="btn btn-success">Registrar venta</button>
-    </form>
+          <h6>Agregar productos</h6>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="producto" class="form-label">Producto:</label>
+              <select id="producto" class="form-select">
+                <option value="">Selecciona un producto</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="cantidad" class="form-label">Cantidad:</label>
+              <input type="number" id="cantidad" min="0" value="0" class="form-control">
+            </div>
+            <div class="col-md-2 d-grid align-items-end">
+              <button type="button" class="btn btn-secondary mt-4" onclick="agregarProducto()">Agregar</button>
+            </div>
+          </div>
+
+          <ul id="listaProductos" class="list-group mb-3"></ul>
+
+          <input type="hidden" id="productosVenta" name="productosVenta">
+
+          <button type="submit" class="btn btn-success">Registrar venta</button>
+        </form>
+      </div>
+    </div>
+
   </div>
-</div>
 
+  <!-- Modal para editar venta -->
+  <div class="modal fade" id="modalEditarVenta" tabindex="-1" aria-labelledby="modalEditarVentaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form id="formEditarVenta">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarVentaLabel">Editar Venta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="edit_cod_venta">
+            
+            <div class="mb-3">
+              <label for="edit_cliente" class="form-label">Cliente:</label>
+              <input type="number" id="edit_cliente" class="form-control" disabled>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit_tipo_entrega" class="form-label">Tipo de entrega:</label>
+              <input type="text" id="edit_tipo_entrega" class="form-control" disabled>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit_producto" class="form-label">Producto:</label>
+              <select id="edit_producto" class="form-select">
+                <option value="">Selecciona un producto</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="edit_cantidad" class="form-label">Cantidad:</label>
+              <input type="number" id="edit_cantidad" class="form-control" min="0" value="0">
+            </div>
+            <button type="button" class="btn btn-secondary mb-3" onclick="agregarProductoEditado()">Agregar producto</button>
+
+            <ul id="edit_lista_productos" class="list-group mb-3"></ul>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-</div>
-
-<script>
-const API_URL = 'http://localhost:5500/api/ventas';
-let ventasCliente = [];
-let ventaSeleccionada = null;
-
-async function buscarVentas() {
-  const id = document.getElementById("buscarCliente").value;
-  if (!id) return;
-
-  const res = await fetch(`${API_URL}/${id}`);
-  const data = await res.json();
-  ventasCliente = data;
-
-  const lista = document.getElementById("listaVentas");
-  lista.innerHTML = "";
-  document.getElementById("listaVentasCard").style.display = "block";
-  document.getElementById("detalleVentaCard").style.display = "none";
-
-  data.forEach(v => {
-    const item = document.createElement("li");
-    item.classList.add("list-group-item", "list-group-item-action");
-    item.textContent = `Venta #${v.cod_venta} - ${new Date(v.fecha_venta).toLocaleString()}`;
-    item.onclick = () => mostrarDetalleVenta(v.cod_venta);
-    lista.appendChild(item);
-  });
-  
-}
-
-function mostrarDetalleVenta(cod_venta) {
-  const venta = ventasCliente.find(v => v.cod_venta === cod_venta);
-  ventaSeleccionada = venta;
-
-  document.getElementById("dv_cod_venta").textContent = venta.cod_venta;
-  document.getElementById("dv_id_cliente").textContent = venta.id_cliente;
-  document.getElementById("dv_tipo_entrega").textContent = venta.tipo_entrega;
-  document.getElementById("dv_fecha_venta").textContent = new Date(venta.fecha_venta).toLocaleString();
-  document.getElementById("dv_total").textContent = venta.total_venta.toFixed(2);
-
-  const ul = document.getElementById("dv_productos");
-  ul.innerHTML = "";
-  venta.productos.forEach(p => {
-    const li = document.createElement("li");
-    li.className = "list-group-item";
-    li.innerHTML = `
-      <strong>Producto:</strong> ${p.nombre_producto} |
-      <strong>Cantidad:</strong> ${p.cantidad} |
-      <strong>Precio:</strong> $${p.precio_unitario} |
-      <strong>Total:</strong> $${p.total_producto}
-    `;
-    ul.appendChild(li);
-  });
-
-  document.getElementById("detalleVentaCard").style.display = "block";
-}
-
-function cargarVentaParaEditar() {
-  const v = ventaSeleccionada;
-  document.getElementById("formTitle").textContent = "Editar Venta";
-  document.getElementById("cod_venta").value = v.cod_venta;
-  document.getElementById("id_cliente").value = v.id_cliente;
-  document.getElementById("tipo_entrega").value = v.tipo_entrega;
-  document.getElementById("fecha_venta").value = new Date(v.fecha_venta).toISOString().slice(0,16);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-async function eliminarVenta() {
-  if (confirm("¿Eliminar esta venta?")) {
-    await fetch(`${API_URL}/${ventaSeleccionada.cod_venta}`, { method: "DELETE" });
-    alert("Venta eliminada.");
-    document.getElementById("detalleVentaCard").style.display = "none";
-    buscarVentas();
-  }
-}
-
-function cancelarEdicion() {
-  document.getElementById("ventaForm").reset();
-  document.getElementById("formTitle").textContent = "Registrar Nueva Venta";
-}
-
-document.getElementById("ventaForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const datos = {
-    id_cliente: document.getElementById("id_cliente").value,
-    tipo_entrega: document.getElementById("tipo_entrega").value,
-    fecha_venta: document.getElementById("fecha_venta").value
-  };
-  const cod_venta = document.getElementById("cod_venta").value;
-
-  if (cod_venta) {
-    await fetch(`${API_URL}/${cod_venta}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos)
-    });
-    alert("Venta actualizada.");
-  } else {
-    await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos)
-    });
-    alert("Venta registrada.");
-  }
-
-  document.getElementById("ventaForm").reset();
-  document.getElementById("formTitle").textContent = "Registrar Nueva Venta";
-  buscarVentas();
-});
-
-const listaProductos = [];
-  const listaProductosUI = document.getElementById("listaProductos");
-  const productosVentaInput = document.getElementById("productosVenta");
-
-  function agregarProducto() {
-    const productoSelect = document.getElementById("producto");
-    const codProducto = productoSelect.value;
-    const nombreProducto = productoSelect.options[productoSelect.selectedIndex].text;
-    const cantidad = parseInt(document.getElementById("cantidad").value);
-
-    // Verificar si el producto ya fue agregado
-    const existente = listaProductos.find(p => p.cod_producto === codProducto);
-    if (existente) {
-      existente.cantidad += cantidad;
-    } else {
-      listaProductos.push({
-        cod_producto: codProducto,
-        nombre_producto: nombreProducto,
-        cantidad: cantidad
-      });
-    }
-
-    // Mostrar en la lista
-    listaProductosUI.innerHTML = '';
-    listaProductos.forEach(p => {
-      const li = document.createElement("li");
-      li.textContent = `${p.nombre_producto} - Cantidad: ${p.cantidad}`;
-      listaProductosUI.appendChild(li);
-    });
-
-    // Actualizar campo oculto
-    productosVentaInput.value = JSON.stringify(listaProductos);
-  }
-
-  document.getElementById("formVenta").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const id_cliente = document.getElementById("cliente").value;
-    const tipo_entrega = document.getElementById("tipo_entrega").value;
-    const productos = JSON.parse(productosVentaInput.value);
-
-    if (!id_cliente || !tipo_entrega || productos.length === 0) {
-      alert("Faltan datos de la venta.");
-      return;
-    }
-
-    const venta = {
-      id_cliente,
-      tipo_entrega,
-      productos
-    };
-
-    try {
-      const response = await fetch('http://localhost:5500/api/ventas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(venta)
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert("Venta registrada con éxito.");
-        // Aquí puedes limpiar el formulario
-      } else {
-        alert("Error: " + data.mensaje);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Error al registrar la venta.");
-    }
-  });
-
-  document.addEventListener("DOMContentLoaded", () => {
-  cargarClientes();
-  cargarProductos();
-});
-
-  // Cargar clientes al iniciar
-async function cargarClientes() {
-  try {
-    const res = await fetch('http://localhost:5500/api/clientes');
-    const data = await res.json();
-    const select = document.getElementById("cliente");
-    select.innerHTML = data.map(c => `<option value="${c.id_cliente}">${c.nombre}</option>`).join('');
-  } catch (err) {
-    console.error("Error cargando clientes:", err);
-  }
-}
-
-// Cargar productos al iniciar
-async function cargarProductos() {
-  try {
-    const res = await fetch('http://localhost:5500/api/productos');
-    const data = await res.json();
-    const select = document.getElementById("producto");
-    select.innerHTML = data.map(p => `<option value="${p.cod_producto}">${p.nombre_producto}</option>`).join('');
-  } catch (err) {
-    console.error("Error cargando productos:", err);
-  }
-}
-
-// Llamar funciones al cargar la página
-window.addEventListener('DOMContentLoaded', () => {
-  cargarClientes();
-  cargarProductos();
-});
-
-</script>
 
 </body>
 </html>
