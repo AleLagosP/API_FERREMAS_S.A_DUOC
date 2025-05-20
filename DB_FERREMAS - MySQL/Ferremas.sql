@@ -1,4 +1,4 @@
--- Base de datos: BD_FERREMAS
+-- Base de datos: BD_FERREMAS.
 -- Tabla de Clientes:
 CREATE TABLE CLIENTES (
     ID_CLIENTE INT AUTO_INCREMENT PRIMARY KEY,
