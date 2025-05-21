@@ -25,6 +25,7 @@ app.use((_req, res, next) => {
 const clientesRouter = require('./controllers/clientes');
 const productosRouter = require('./controllers/productos');
 
+
 // Definición de rutas
 function configurarRutas() {
     app.get("/api/test/", (_req, res) => {
@@ -33,6 +34,7 @@ function configurarRutas() {
 
     app.use('/api/clientes', clientesRouter);
     app.use('/api/productos', productosRouter);
+
 }
 
 // Configurar rutas antes de levantar el servidor
